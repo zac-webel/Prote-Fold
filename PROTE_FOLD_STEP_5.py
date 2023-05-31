@@ -70,3 +70,63 @@ with strategy.scope():
 
     # compile model
     model.compile(loss='categorical_crossentropy',optimizer=opt,metrics = ['accuracy'])
+    
+    # Fit model
+    model.fit([X_train,prop_train],y_train,
+         epochs=1000,
+         batch_size=32,
+         validation_data=[[X_val,prop_val],y_val],
+         callbacks=callbacks)
+
+
+# Evaluate model
+val_loss, val_accuracy = model.evaluate([X_val,prop_val],y_val)
+print("Val Loss: ", val_loss)
+print("Val Accuracy: ", val_accuracy)
+
+test_loss, test_accuracy = model.evaluate([X_test,prop_test],y_test)
+print("Test Loss: ", test_loss)
+print("Test Accuracy: ", test_accuracy)
+
+
+
+
+
+# make reliability curve
+predicted_distributions = model.predict([X_test,prop_test])
+probability = []
+result = []
+# store the rouned probability and the binary result of next amino acid
+for i in range(len(predicted_distributions)):
+    for j in range(len(predicted_distributions[0])):
+        probability.append(round(100*predicted_distributions[i][j],0))
+        result.append(y_test[i][j])
+
+# make a pandas df of the probs and binary result
+import pandas as pd
+test_predictions = pd.DataFrame()
+test_predictions['probability'] = probability
+test_predictions['result'] = result
+
+
+x = []
+y = []
+cur = 0
+# while loop through each valid probability 0-100
+while cur<=1000:
+    # if the model predicted an amino acid with that probability
+    # store the probability and the actual frequency of that amino acid being a correct prediction
+    if(len(test_predictions.loc[test_predictions.probability==cur])>100):
+        x.append(cur)
+        y.append(100*sum(test_predictions.loc[test_predictions.probability==cur]['result'])/len(test_predictions.loc[test_predictions.probability==cur])) 
+    cur = cur + 1
+
+# plot y=x and our threshold probabilities vs actual rate
+import matplotlib.pyplot as plt
+plt.scatter(x=x,y=y)
+line = [x for x in range(0,100)]
+plt.plot(line)
+
+
+
+
