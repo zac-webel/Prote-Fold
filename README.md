@@ -1,8 +1,106 @@
+# Zachary Webel - zow2@georgetown.edu
+
+
 # Prote-Fold
 Attention-LSTM Hybrid generating novel polypeptide sequences with desired secondary structure properties
 
+<img width="500" alt="Screen Shot 2023-06-04 at 5 36 38 PM" src="https://github.com/zac-webel/Prote-Fold/assets/118777665/ea7f8f0b-3957-445f-ba74-94a3361e0cff">
 
-The user inputs three % values of helix, turn and sheet desired % folding structure. Then the model will take a completely random 30 amino acid seed and generate a probability distribution of the next amino acid. I sample from that distribution and generate new sequences. Then I calculate the helix, turn and sheet % using bio seqUtils protein analysis package. Below is output from the generation script step 6. 
+<img width="500" alt="Screen Shot 2023-06-04 at 5 38 14 PM" src="https://github.com/zac-webel/Prote-Fold/assets/118777665/ad93969a-9416-491f-857a-9a7306552a1a">
+
+# Application
+The model and generation script can generate protein sequences that mimic the secondary structure profile the user desires.
+
+
+# Results
+The model, on average reconstructed the desired secondary structure percentages, as calculated by Bio.SeqUtils.ProtParam ProteinAnalysis, at an absolute difference of less than 3% when combining helix, turn and sheet percentages.
+
+![Screen Shot 2023-05-28 at 8 51 58 PM](https://github.com/zac-webel/Prote-Fold/assets/118777665/ce3c3258-6fc7-418a-b056-eb7dc8b8fbfe)
+
+
+# Example Workflow
+I want to create a protein sequences with secondary structure properties defined by:
+* Helix - 40%
+* Turn - 15%
+* Sheet - 15%
+ 
+ With these properties as input into the network, the generation script will create new polypeptide sequences with secondary structure properties close to what the user desires.
+ 
+<img width="1269" alt="Screen Shot 2023-06-04 at 5 19 17 PM" src="https://github.com/zac-webel/Prote-Fold/assets/118777665/9f877c1a-91d9-4f20-a742-f8a5c513e0a1">
+
+ The user can then choose any sequence and further their analysis. Two pathways to study the generated polypeptide sequences revolve around folding analysis and function analysis. 
+ 
+ 
+## Selected Sequence
+<img width="1254" alt="Screen Shot 2023-06-04 at 5 22 11 PM" src="https://github.com/zac-webel/Prote-Fold/assets/118777665/41515da2-9a34-4e39-af9e-1aaacad506ef">
+
+# AlphaFold Predicted Structure
+screen shot using PyMOL
+<img width="771" alt="Screen Shot 2023-06-04 at 5 31 33 PM" src="https://github.com/zac-webel/Prote-Fold/assets/118777665/4c6f24c4-bc0f-41dc-8487-55e1d3fdc668">
+
+# Predicted Enzymatic Activity - ProteInfer 
+<img width="725" alt="Screen Shot 2023-06-04 at 5 33 41 PM" src="https://github.com/zac-webel/Prote-Fold/assets/118777665/5be0d4ba-f7bf-4ad0-b59f-6de9411034d0">
+
+# Predicted Function - ProteInfer
+<img width="553" alt="Screen Shot 2023-06-04 at 5 34 22 PM" src="https://github.com/zac-webel/Prote-Fold/assets/118777665/d3b95e56-6f73-4059-bde3-42b4c0ad2cb4">
+
+
+
+# How to run
+Each step is posted, view code in order STEP_n
+
+
+# Project Goal:
+This project aims to explore the capabilities of language modeling to create sequential representations that match user defined criteria. The application will be protein design and creating sequences that mimic secondary structure properties given by a 1d vector. This project is a branch of my tail firber lstm project. I use the same steps in collecting and transforming the data. 
+
+
+# Data:
+All data collected and used is freely available. The data is collected from the protein database in the Entrez Molecular Sequence Database. The query used is ''(long tail fibre[All Fields] OR long tail fiber[All Fields]) AND phage[All Fields]’. The fields collected were: id, description, sequence, organism and taxonomy.
+<img width="916" alt="Picture1" src="https://github.com/zac-webel/Tail-Fiber-LSTM-/assets/118777665/26543e89-95b3-41f7-b764-cc7ea193ad14">
+
+
+# Data Cleaning
+<img width="768" alt="Picture2" src="https://github.com/zac-webel/Tail-Fiber-LSTM-/assets/118777665/4ae0bfb6-474d-4212-acb6-537a8c794423">
+
+
+# Amino Acid Embeddings
+<img width="362" alt="Picture3" src="https://github.com/zac-webel/Tail-Fiber-LSTM-/assets/118777665/b6172b88-d204-4a65-b463-22dc949720a2">
+
+# Model
+
+<img width="910" alt="Screen Shot 2023-06-04 at 5 45 05 PM" src="https://github.com/zac-webel/Prote-Fold/assets/118777665/2fe249d3-04de-4e6f-9034-4d2f7d2e1ce9">
+
+The model takes two inputs:
+1. Amino Acid Sequence Data
+2. Secondary Structure Features
+
+The architecture combines sequential language modeling along with self attention by concatenting the nonlinear transformation of the secondary structure features along with the final hidden states of the lstm layers and the attention transformed flatten sequence. 
+
+# Input 1 - Amino Acid Sequence Feature Creation
+* Initialize the start index to 0 and the stop index to 30
+* Set the input_sequence to train_sequence[start:stop]
+* For each amino acid in the input sequence, translate to the corresponding embedding matrix
+* Set the output_amino_acid variable to the stop amino acid
+* One hot encode an output vector corresponding to the index position of the output amino acid in the embedding data frame
+* Increment start and stop tags
+* Repeat for all training sequences
+* Reshape the input sequences to (len, 30, 3)
+
+<img width="279" alt="Picture4" src="https://github.com/zac-webel/Tail-Fiber-LSTM-/assets/118777665/b87b6e54-344f-47a6-9162-12ab96823bfe">
+
+
+# Input 2 - Secondary Structure Properties
+Helix, turn, sheet secondary structure fractions
+Calculated using Bio.SeqUtils.ProtParam ProteinAnalysis
+
+1. Target features – Can be taken from any protein, what the user desires - 3 percentages
+2. Window features – The secondary structure of the current window (30 amino acids)
+3. Difference Features – For each secondary structure: Target – Current built sequence percentage
+4. Concatenate the vectors - 9 total
+
+
+# Generation
+The user inputs three % values of helix, turn and sheet desired % folding structure. Then the model will take a completely random 30 amino acid seed and generate a probability distribution of the next amino acid. I sample from that distribution and generate new sequences. Then I calculate the helix, turn and sheet % using bio seqUtils protein analysis package. Below is output from the generation script step 6. The target vector is sampled from my antibody protein sequence database which is completly different structures that the model was trained on. Antibody's have a higher sheet percentage and lower helix percentage in general than tail fibers. However the model excelled in mimicing the secondary structure. 
 
 YFLKDYMCTARNNTYYYGTRTFTMYIAITPQAGPAPKNMIATGSGFALPQKTTTNYARTTSVSHEYESYRYHHWGFGTWTDYPNNPRRDKVSLAQGGNSANTTDYNGIIFRGGKPQDLDSFVSLGGAFVAFTRRLIRANDAIQGAAPNRLEATQTLKTKVTTILVTSSGSMKTQVTTDLTNVAGIVSTKDSMEPMDLSNLGIDTSGDIDSRSTSTYSLQITTTTENKNGNGNATAWSNDLTASSSQQDTNIVWDEKTNLTA 
 
