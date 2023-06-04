@@ -4,9 +4,9 @@
 # Prote-Fold
 Attention-LSTM Hybrid generating novel polypeptide sequences with desired secondary structure properties
 
-<img width="500" alt="Screen Shot 2023-06-04 at 5 36 38 PM" src="https://github.com/zac-webel/Prote-Fold/assets/118777665/ea7f8f0b-3957-445f-ba74-94a3361e0cff">
+<img width="400" alt="Screen Shot 2023-06-04 at 5 36 38 PM" src="https://github.com/zac-webel/Prote-Fold/assets/118777665/ea7f8f0b-3957-445f-ba74-94a3361e0cff">
 
-<img width="500" alt="Screen Shot 2023-06-04 at 5 38 14 PM" src="https://github.com/zac-webel/Prote-Fold/assets/118777665/ad93969a-9416-491f-857a-9a7306552a1a">
+<img width="400" alt="Screen Shot 2023-06-04 at 5 38 14 PM" src="https://github.com/zac-webel/Prote-Fold/assets/118777665/ad93969a-9416-491f-857a-9a7306552a1a">
 
 # Application
 The model and generation script can generate protein sequences that mimic the secondary structure profile the user desires.
@@ -32,14 +32,14 @@ I want to create a protein sequences with secondary structure properties defined
  
  
 ## Selected Sequence
-<img width="1254" alt="Screen Shot 2023-06-04 at 5 22 11 PM" src="https://github.com/zac-webel/Prote-Fold/assets/118777665/41515da2-9a34-4e39-af9e-1aaacad506ef">
+<img width="800" alt="Screen Shot 2023-06-04 at 5 22 11 PM" src="https://github.com/zac-webel/Prote-Fold/assets/118777665/41515da2-9a34-4e39-af9e-1aaacad506ef">
 
 # AlphaFold Predicted Structure
 screen shot using PyMOL
-<img width="771" alt="Screen Shot 2023-06-04 at 5 31 33 PM" src="https://github.com/zac-webel/Prote-Fold/assets/118777665/4c6f24c4-bc0f-41dc-8487-55e1d3fdc668">
+<img width="500" alt="Screen Shot 2023-06-04 at 5 31 33 PM" src="https://github.com/zac-webel/Prote-Fold/assets/118777665/4c6f24c4-bc0f-41dc-8487-55e1d3fdc668">
 
 # Predicted Enzymatic Activity - ProteInfer 
-<img width="725" alt="Screen Shot 2023-06-04 at 5 33 41 PM" src="https://github.com/zac-webel/Prote-Fold/assets/118777665/5be0d4ba-f7bf-4ad0-b59f-6de9411034d0">
+<img width="500" alt="Screen Shot 2023-06-04 at 5 33 41 PM" src="https://github.com/zac-webel/Prote-Fold/assets/118777665/5be0d4ba-f7bf-4ad0-b59f-6de9411034d0">
 
 # Predicted Function - ProteInfer
 <img width="553" alt="Screen Shot 2023-06-04 at 5 34 22 PM" src="https://github.com/zac-webel/Prote-Fold/assets/118777665/d3b95e56-6f73-4059-bde3-42b4c0ad2cb4">
@@ -60,7 +60,7 @@ All data collected and used is freely available. The data is collected from the 
 
 
 # Data Cleaning
-<img width="768" alt="Picture2" src="https://github.com/zac-webel/Tail-Fiber-LSTM-/assets/118777665/4ae0bfb6-474d-4212-acb6-537a8c794423">
+<img width="500" alt="Picture2" src="https://github.com/zac-webel/Tail-Fiber-LSTM-/assets/118777665/4ae0bfb6-474d-4212-acb6-537a8c794423">
 
 
 # Amino Acid Embeddings
@@ -68,7 +68,7 @@ All data collected and used is freely available. The data is collected from the 
 
 # Model
 
-<img width="910" alt="Screen Shot 2023-06-04 at 5 45 05 PM" src="https://github.com/zac-webel/Prote-Fold/assets/118777665/2fe249d3-04de-4e6f-9034-4d2f7d2e1ce9">
+<img width="800" alt="Screen Shot 2023-06-04 at 5 45 05 PM" src="https://github.com/zac-webel/Prote-Fold/assets/118777665/2fe249d3-04de-4e6f-9034-4d2f7d2e1ce9">
 
 The model takes two inputs:
 1. Amino Acid Sequence Data
