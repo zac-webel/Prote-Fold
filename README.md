@@ -13,7 +13,7 @@ The model and generation script can generate protein sequences that mimic the se
 
 
 # Results
-The model, on average reconstructed the desired secondary structure percentages, as calculated by Bio.SeqUtils.ProtParam ProteinAnalysis, at an absolute difference of less than 3% when combining helix, turn and sheet percentages.
+The model, on average, reconstructed the desired secondary structure percentages, as calculated by Bio.SeqUtils.ProtParam ProteinAnalysis, at an absolute difference of less than 3% when combining helix, turn and sheet percentages.
 
 ![Screen Shot 2023-05-28 at 8 51 58 PM](https://github.com/zac-webel/Prote-Fold/assets/118777665/ce3c3258-6fc7-418a-b056-eb7dc8b8fbfe)
 
